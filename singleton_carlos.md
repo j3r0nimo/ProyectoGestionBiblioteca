@@ -18,7 +18,7 @@ Las carácterísticas del patrón singleton son:
 
 ### Singleton en el proyecto de Grupo
 
-En nuestro proyecto, un sistema web de gestión de biblioteca desarrollado en javascript, con una API en el backend y un frontend diseñado en React, el cual consume esa API. La base de datos es MongoDB y la librería es mongoose.
+Nuestro proyecto es un sistema web de gestión de biblioteca desarrollado en javascript, con una API en el backend y un frontend diseñado en React, el cual consume esa API. La base de datos es MongoDB y la librería es mongoose.
 
 La conexión a la base de datos es una situación ideal para aplicar **un diseño** de patrón singleton, dado que la conexión a una base de datos tiene necesarianente que ser una instancia única, que se comprarte para cualquier lado del sistema y su configuración se centraliza en un único punto.
 

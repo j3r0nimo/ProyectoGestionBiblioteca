@@ -20,7 +20,7 @@ Las carácterísticas del patrón singleton son:
 
 Nuestro proyecto es un sistema web de gestión de biblioteca desarrollado en javascript, con una API en el backend y un frontend diseñado en React, el cual consume esa API. La base de datos es MongoDB y la librería es mongoose.
 
-La conexión a la base de datos es una situación ideal para aplicar **un diseño** de patrón singleton, dado que la conexión a una base de datos tiene necesarianente que ser una instancia única, que se comprarte para cualquier lado del sistema y su configuración se centraliza en un único punto.
+La conexión a la base de datos es una situación ideal para aplicar **un diseño** de patrón singleton, dado que la conexión a una base de datos tiene necesariamente que ser una instancia única, que se comprarte para cualquier lado del sistema y su configuración se centraliza en un único punto.
 
 Mongoose tiene la característica de no permitir que la conexión pueda duplicarse y de emplear siempre la misma, pero esa no es la cuestión; la cuestión es si la conexión **está diseñada** bajo un patrón singleton, esto es: si sacamos a mongoose, ¿la conexión se instancia con cada llamada a la base de datos o su diseño lo impide?
 

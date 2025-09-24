@@ -58,10 +58,10 @@ Este diagrama muestra cómo funciona el patrón **Singleton** aplicado a la cone
 
 ```mermaid
 flowchart TD
-    A[Variable = false] --> B[Llamada a la función connectDB()]
-    B --> C{¿isconnected = true?}
-    C -- SI --> D[Uso la conexión existente]
-    C -- NO --> E[Creo una nueva conexión con MongoDB]
+    A[Variable = false] --> B[Llamada a la funcion connectDB()]
+    B --> C{isconnected = true?}
+    C -- SI --> D[Uso la conexion existente]
+    C -- NO --> E[Creo una nueva conexion con MongoDB]
     E --> F[isconnected = true]
     F --> B
 ```

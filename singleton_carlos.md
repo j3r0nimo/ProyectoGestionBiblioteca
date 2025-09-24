@@ -47,21 +47,8 @@ El proceso de conexión y la aplicación del patrón singleton es:
 
 ### Diagrama de la Conexión Singleton a la BDD (png)
 
-![alt text](singleton_png-1.png)
-
-### Diagrama de la Conexión Singleton a la BDD (mermaid)
-
 Este diagrama muestra cómo funciona el patrón **Singleton** aplicado a la conexión con MongoDB:  
 - Si ya existe una conexión abierta, se reutiliza.  
 - Si no, se crea una nueva y se marca como activa.  
 
-
-```mermaid
-flowchart TD
-    A[Variable = false] --> B[Llamada a la funcion connectDB()]
-    B --> C{isconnected = true?}
-    C -- SI --> D[Uso la conexion existente]
-    C -- NO --> E[Creo una nueva conexion con MongoDB]
-    E --> F[isconnected = true]
-    F --> B
-```
+![alt text](singleton_png-1.png)

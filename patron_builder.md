@@ -112,7 +112,7 @@ class LibroBuilder {
     }
 
     build() {
-        // Aquí podrías agregar validaciones extra si querés
+        // se puede agregar validaciones extra 
         return this.libro;
     }
 }

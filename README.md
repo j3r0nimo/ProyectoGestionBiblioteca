@@ -11,10 +11,10 @@ Repositorio de metodologia de sistemas
 
 - [Propuesta](#proyecto-propuesto)
 - [Patron Creacional](#patrón-creacional)
-- [Singleton](#singleton)
-- [Decorator](#patron-decorator)
+- [Singleton](#patrón-singleton)
+- [Decorator](#patrón-decorator)
 - [Builder](#patrón-builder)
-- [Factory](#patron-factory)
+- [Factory](#patrón-factory)
 
 ---
 ## Proyecto propuesto

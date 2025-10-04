@@ -1,4 +1,4 @@
-# Proyecto Gestion De Biblioteca
+# Proyecto Gestion De Biblioteca Personal
 Repositorio de metodologia de sistemas
 
 - Jeronimo Baltian Ortiz
@@ -10,30 +10,21 @@ Repositorio de metodologia de sistemas
 ## Indice
 
 - [Propuesta](#proyecto-propuesto)
-- [Patron Creacional](#patrón-creacional)
 - [Singleton](#patrón-singleton)
-- [Decorator](#patrón-decorator)
 - [Builder](#patrón-builder)
 - [Factory](#patrón-factory)
+- [Decorator](#patrón-decorator)
+
 
 ---
 ## Proyecto propuesto
 
-El proyecto del Grupo 6, para su aplicación a la materia Metodología de Sistemas II, es un Sistema de Sestión de Bibliotecas, con un servicio online accesible por medio de un navegador web. Las herramientas y la arquitectura de su diseño son un Backend donde se emplean Node.js, Express y mongoDB para servir los datos, con un concepto de servicio exclusivamente de tipo API, mas un Frontend diseñado en React.js, en ambos casos con el lenguaje javascript.
+El proyecto del Grupo 6, para su aplicación a la materia Metodología de Sistemas II, es un Sistema de Gestión de Biblioteca Personal, con un servicio online accesible por medio de un navegador web. Las herramientas y la arquitectura de su diseño son un Backend donde se emplean Node.js, Express y mongoDB para servir los datos, con un concepto de servicio exclusivamente de tipo API, mas un Frontend diseñado en React.js, en ambos casos con el lenguaje javascript.
 
 El Backend es una API que permite operar a través de endpoints, los cuales brindan servicios para crear, leer, actualizar  y eliminar los documentos almacenados en la base de datos. La base de datos almacena dos colecciones, libros y contenido y el diseño del backend sigue un patrón de diseño estándar: modelo, servicio, controlador, rutas y aplicación.
 
 El Frontend es un diseño para el consumo de esa API, producido con React.js, basado en el uso de componentes reutilizables, el uso de un DOM virtual para las actualizaciones, la sintaxis JSX para integrar HTML y JavaScript y la capacidad de crear interfaces dinámicas y responsivas.
-- [~volver al indice~](#indice)
-
----
-## Patrón creacional
-
-Los patrones creacionales son técnicas de diseño de software directamente relacionadas con la creación de objetos o, lo que es lo mismo, con la creación de instancias de una clase.
-
-Su razón de ser es la de abstraer la creación de la instancia, a fin de evitar la dependencia de la forma en que se crea la instancia. Los patrones pueden verse como un diseño que evita que el código cliente quede fuertemente acoplado a la forma exacta en que los objetos son creados, o sea: que el resto del código no dependa de como se crea el objeto o que tenga que indicar como crearlo.
-
-- [~volver al indice~](#indice)
+- [volver al indice](#indice)
 
 ---
 ## Patrón Singleton
@@ -85,63 +76,10 @@ Este diagrama muestra cómo funciona el patrón **Singleton** aplicado a la cone
 
 ![alt text](singleton.png)
 
-- [~volver al indice~](#indice)
+- [volver al indice](#indice)
 
 ---
-## Patrón Decorator
 
-El patrón Decorator se utiliza para añadir nuevas funcionalidades o responsabilidades a un objeto de forma dinámica, sin necesidad de modificar su clase original. Funciona "envolviendo" el objeto base con uno o más objetos "decoradores" que añaden el nuevo comportamiento.
-
-Un ejemplo clásico es el de una cafetería: el objeto base es un "Café solo". A este se le pueden añadir decoradores como "Leche", "Azúcar" o "Crema". Cada decorador añade un costo y una descripción, pero el objeto final sigue siendo un tipo de café. No es necesario crear una clase para cada posible combinación de ingredientes.
-
-Las características del patrón Decorator son:
-
-Permite añadir o quitar responsabilidades de un objeto en tiempo de ejecución.
-
-Es una alternativa flexible a la herencia para extender la funcionalidad.
-
-Los decoradores tienen la misma interfaz que el objeto que envuelven.
-
-Se pueden anidar múltiples decoradores para combinar funcionalidades complejas.
-
-Decorator en nuestro proyecto
-
-Nuestro proyecto de gestión de biblioteca necesita enriquecer los datos de los libros antes de enviarlos como respuesta en la API. El modelo base de Libro contiene la información esencial, pero para el cliente (frontend) necesitamos datos adicionales o procesados.
-
-El patrón Decorator se aplica para añadir esta información de forma limpia y modular. Hemos implementado tres decoradores específicos:
-
-PortadaDecorator: Transforma la ruta relativa de la imagen de portada (ej: /uploads/imagen.jpg) en una URL completa y accesible (ej: http://localhost:3000/uploads/imagen.jpg), utilizando el contexto de la petición (req).
-
-DisponibilidadDecorator: Añade un campo para indicar si el libro está disponible para préstamo.
-
-StatsDecorator: Agrega estadísticas relevantes, como el rating o el número de veces que ha sido prestado.
-
-Este enfoque mantiene nuestro modelo de datos principal (Libro) limpio, mientras que la lógica para enriquecer la respuesta queda encapsulada en los controladores y las clases decoradoras.
-
-Diseño Decorator en nuestro sistema
-El proceso de aplicación del patrón Decorator se puede ver claramente en los métodos getLibros y getLibroById del controlador. El flujo es el siguiente:
-
-1. El controlador recibe una petición (req) para obtener uno o más libros.
-
-2. Se llama a un servicio (libroServicio) que obtiene los datos crudos del libro o libros desde la base de datos.
-
-3. Si es una lista de libros, se utiliza el método .map() para aplicar el proceso de decoración a cada libro individualmente.
-
-4. Comienza la cadena de decoración para un libro: primero se instancia PortadaDecorator, pasándole el objeto del libro y el objeto req para construir la URL completa de la imagen.
-
-5. Luego, se toma el objeto resultante del primer decorador (usando decorado.getData()) y se pasa al constructor del DisponibilidadDecorator.
-
-6. De la misma forma, el resultado del segundo decorador se pasa al constructor del StatsDecorator.
-
-7. Finalmente, se llama al método getData() del último decorador en la cadena para obtener el objeto final, completamente enriquecido con todas las nuevas propiedades.
-
-8. Este objeto final es el que se incluye en la respuesta JSON de la API.
-
-9. Este método nos permite componer dinámicamente el objeto de respuesta, añadiendo solo la información necesaria de una manera ordenada y mantenible.
-
-- [~volver al indice~](#indice)
-
----
 ## Patrón Builder
 
 ###  Builder para el modelo Libro
@@ -277,7 +215,7 @@ const libro = new LibroBuilder()
     .build();
 ```
 
-- [~volver al indice~](#indice)
+- [volver al indice](#indice)
 
 ---
 ## Patrón Factory
@@ -292,12 +230,55 @@ El patrón Factory es un patrón de diseño creacional el cual se usa para crear
 
 En nuestro frontend implementariamos el patrón Factory por varias razones:
 - Desacoplamiento: el cliente no tiene que saber como se crean los componentes, solo nos tiene que pedir que objeto quiere ver.
-  Sin el Factory tendriamos que decidir que renderizar (tarjeta del autor, del libro o de la revista), pero al implementarlo tenemos que nada mas llamar al factory y la lógica estaria encapsulada.
+  Sin el Factory tendriamos que decidir que renderizar (formulario del autor, del libro o de la revista), pero al implementarlo tenemos que nada mas llamar al factory y la lógica estaria encapsulada.
 - Escalabilidad y mantenimiento: en caso futuro de añadir una clase o modificar algo de otras, solo tendriamos que ir al Factory y no ir cambiando todos los archivos en los que usamos cada clase.
-- Manejo de varios objetos: en nuestro caso usamos libros, revistas y autores. Cada uno requiere un componente distinto en sus interfaces (libro tiene el ISBN, revista tiene numero de edición e ISSN y el autor tiene la biografía).
+- Manejo de varios objetos: en nuestro caso usamos formularios para libros, revistas y autores. Cada uno requiere un componente distinto en sus interfaces (libro tiene el ISBN, revista tiene numero de edición e ISSN y el autor tiene la biografía).
   Al usar Factory ponemos todo en un solo lugar y nos evitamos el trabajo de usar miles de Ifs o Switchs que están repartidos por todos los archivos.
 
 ### Abreviando todo sobre Factory:
 El usar Factory nos va a facilitar el mantenimiento, la escalabilidad y la organización en nuestra aplicación de gestión de biblioteca, evitando repetir código, tener código limpio y facilitando la incorporación de nuevas entidades en planes futuros
 
-- [~volver al indice~](#indice)
+- [volver al indice](#indice)
+
+---
+
+## Patrón Decorator
+
+El patrón **Decorator** se utiliza para añadir nuevas funcionalidades o responsabilidades a un objeto de forma dinámica, sin necesidad de modificar su clase original. Funciona "envolviendo" el objeto base con uno o más objetos "decoradores" que añaden el nuevo comportamiento.
+
+Un ejemplo clásico es el de una cafetería: el objeto base es un "Café solo". A este se le pueden añadir decoradores como "Leche", "Azúcar" o "Crema". Cada decorador añade un costo y una descripción, pero el objeto final sigue siendo un tipo de café. No es necesario crear una clase para cada posible combinación de ingredientes.
+
+Las características del patrón Decorator son:
+* Permite añadir o quitar responsabilidades de un objeto en tiempo de ejecución.
+* Es una alternativa flexible a la herencia para extender la funcionalidad.
+* Los decoradores tienen la misma interfaz que el objeto que envuelven.
+* Se pueden anidar múltiples decoradores para combinar funcionalidades complejas.
+
+---
+## Decorator en nuestro proyecto
+
+Nuestro proyecto de gestión de biblioteca necesita enriquecer los datos de los libros antes de enviarlos como respuesta en la API. El modelo base de `Libro` contiene la información esencial, pero para el cliente (frontend) necesitamos datos adicionales o procesados.
+
+El patrón Decorator se aplica para añadir esta información de forma limpia y modular. Hemos implementado tres decoradores específicos:
+
+* **PortadaDecorator**: Transforma la ruta relativa de la imagen de portada (ej: `/uploads/imagen.jpg`) en una URL completa y accesible (ej: `http://localhost:3000/uploads/imagen.jpg`), utilizando el contexto de la petición (`req`).
+* **DisponibilidadDecorator**: Añade un campo para indicar si el libro está disponible para préstamo.
+* **StatsDecorator**: Agrega estadísticas relevantes, como el rating o el número de veces que ha sido prestado.
+
+Este enfoque mantiene nuestro modelo de datos principal (`Libro`) limpio, mientras que la lógica para enriquecer la respuesta queda encapsulada en los controladores y las clases decoradoras.
+
+---
+## Diseño Decorator en nuestro sistema
+
+El proceso de aplicación del patrón Decorator se puede ver claramente en los métodos `getLibros` y `getLibroById` del controlador. El flujo es el siguiente:
+
+1.  El controlador recibe una petición (`req`) para obtener uno o más libros.
+2.  Se llama a un servicio (`libroServicio`) que obtiene los datos crudos del libro o libros desde la base de datos.
+3.  Si es una lista de libros, se utiliza el método `.map()` para aplicar el proceso de decoración a cada libro individualmente.
+4.  Comienza la cadena de decoración para un libro: primero se instancia `PortadaDecorator`, pasándole el objeto del libro y el objeto `req` para construir la URL completa de la imagen.
+5.  Luego, se toma el objeto resultante del primer decorador (usando `decorado.getData()`) y se pasa al constructor del `DisponibilidadDecorator`.
+6.  De la misma forma, el resultado del segundo decorador se pasa al constructor del `StatsDecorator`.
+7.  Finalmente, se llama al método `getData()` del último decorador en la cadena para obtener el objeto final, completamente enriquecido con todas las nuevas propiedades.
+8.  Este objeto final es el que se incluye en la respuesta JSON de la API.
+9.  Este método nos permite componer dinámicamente el objeto de respuesta, añadiendo solo la información necesaria de una manera ordenada y mantenible.
+- [volver al indice](#indice)

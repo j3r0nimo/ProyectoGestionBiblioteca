@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors'
 import connectDB from './db/db.js';
 import librosRutas from '../src/routes/libroRoutes.js';
 import contenidosRutas from '../src/routes/contenidoRoutes.js';
@@ -14,7 +15,9 @@ const __dirname = path.dirname(__filename);
 
 // app: instancia de express
 const app = express();
-
+app.use(cors({
+    origin: "http://localhost:5173"
+}))
 // app: para servir json content
 app.use(express.json());
 
@@ -49,6 +52,7 @@ app.use(errorHandler);
 // inicio del servidor
 (async() => {
     try{
+        console.log("Conectando a MongoDB con URI:", process.env.MONGODB_URI);
         await connectDB();
         const PORT = process.env.BACK_PORT || process.env.PORT || 3000;        
         app.listen(PORT, () => {

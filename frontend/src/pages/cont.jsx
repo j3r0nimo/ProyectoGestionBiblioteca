@@ -8,9 +8,7 @@ function ListLibros() {
     useEffect(() => {
         getContenidos(page).then(res => {
             setCont(res.data);
-            setMeta(res.meta);
-            console.log(res.data);
-            
+            setMeta(res.meta);                        
         });
     }, [page])
 

@@ -82,7 +82,7 @@ try {
             subgenero: "Aviación militar",
             anio: 2017,
             paginas: 96,
-            portadaImagePath: "combat_aircraft_feb2017.jpg"
+            portadaImagePath: "/uploads/combat_aircraft_feb2017.jpg"
         },
         {                                             //id[5]  
             tipo: "Libro",

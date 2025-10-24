@@ -21,7 +21,9 @@ function ListLibros() {
     return (
         <>
             <ul>
-                {libros.map(l => <li key={l._id}>{l.tituloLibro}</li>)}
+                {libros.map(l => 
+                <li key={l._id}><img src={l.portada} alt="" width={50}/>{l.tituloLibro}</li>
+                )}
             </ul>
             <button onClick={prevPage} disabled={!meta?.hasPrev}>Anterior</button>
             <button onClick={nextPage} disabled={!meta?.hasNext}>Siguiente</button>

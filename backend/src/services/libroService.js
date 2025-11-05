@@ -6,7 +6,6 @@ import Contenido from '../models/contenido.js';
 // Ejemplo: const nombreFuncion = async () => { }
 // Error handling: a nivel de la capa del controller
 // id validation: a nivel ruta, mediante un middleware
-
 // Lista de funciones:
 // getLibrosService         RETORNAR EL LISTADO DE LIBROS
 // getLibroByIdService      RETORNAR EL LIBRO POR SU /:id

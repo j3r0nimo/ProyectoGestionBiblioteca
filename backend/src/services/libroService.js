@@ -1,5 +1,5 @@
 import Libro from '../models/libro.js';
-import Contenido from '../models/contenido.js';
+import Contenido from '../models/contenido.js'
 
 // NORMAS DEL DISEÑO:
     // Estilo de función: function expression (o sea: asignar la función a una variable)

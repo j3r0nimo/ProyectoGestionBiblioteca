@@ -1,3 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
-echo "Husky se ejecutó correctamente antes del commit!"
+
+echo "Ejecutando lint-staged antes del commit..."
+npx lint-staged

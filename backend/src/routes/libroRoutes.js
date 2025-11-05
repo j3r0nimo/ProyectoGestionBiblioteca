@@ -11,13 +11,12 @@ const router = express.Router();
         /productos/:id/editar → dynamic + specific
         /productos/:id → catch-all dynamic → ALWAYS LAST        */
 
-router.put('/:id', validateObjectId('id'), libroControlador.updateLibro);       // mas específico que GET/:id, va antes de GET/:id
-router.get('/', libroControlador.getLibros);                                    // Root siempre antes de los parametros dinamicos
+router.put('/:id', validateObjectId('id'), libroControlador.updateLibro); // mas específico que GET/:id, va antes de GET/:id
+router.get('/', libroControlador.getLibros); // Root siempre antes de los parametros dinamicos
 router.post('/', libroControlador.newLibro);
-router.delete('/:id', validateObjectId('id'), libroControlador.deleteLibro);    // dinámico
-router.get('/:id', validateObjectId('id'), libroControlador.getLibroById);      // GET dinamico siempre al final
+router.delete('/:id', validateObjectId('id'), libroControlador.deleteLibro); // dinámico
+router.get('/:id', validateObjectId('id'), libroControlador.getLibroById); // GET dinamico siempre al final
 export default router;
-
 
 /*
 router.get('/nuevo', renderFormularioNuevoProducto);            // Lo mas específico

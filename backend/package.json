@@ -32,8 +32,8 @@
     "prettier": "^3.6.2"
   },
   "lint-staged": {
-    "backend/src/**/*.js": [
-      "eslint --config backend/eslint.config.js --fix",
+    "src/**/*.js": [
+      "npx eslint --config eslint.config.js --fix",
       "npx prettier --write"
     ]
   }

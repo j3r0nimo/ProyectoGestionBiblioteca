@@ -59,6 +59,6 @@ app.use(errorHandler);
             console.log(`Skynet is fully operational at http://localhost:${PORT}`);
         });        
     } catch(error) {
-        console.error('Skynet no permite la conección...', error);
+        console.error("Skynet no permite la conección...", error);
     }
 })();

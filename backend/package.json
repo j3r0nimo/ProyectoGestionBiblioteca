@@ -4,12 +4,11 @@
   "main": "src/app.js",
   "type": "module",
   "scripts": {
+    "prepare": "cd .. && npx husky",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "seed": "node src/db/seed.js",
-    "prepare": "husky",
-    "postinstall": "husky install"
+    "seed": "node src/db/seed.js"
   },
   "keywords": [],
   "author": "",

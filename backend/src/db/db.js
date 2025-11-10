@@ -25,7 +25,7 @@ const connectDB = async () => {
     // 'console.error' do not stop the process, it just logs the error message to the console,
     // So you see what went wrong and then gracefully exit the process. That’s also fine.
     console.error("Error de conección a MongoDB", err);
-    process.exit(1);
+    process.exit(1)
   }
 };
 

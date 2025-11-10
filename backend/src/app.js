@@ -52,13 +52,13 @@ app.use(errorHandler);
 // inicio del servidor
 (async() => {
     try{
-        console.log("Conectando a MongoDB con URI:", process.env.MONGODB_URI);
+        console.log('Conectando a MongoDB con URI:', process.env.MONGODB_URI);
         await connectDB();
         const PORT = process.env.BACK_PORT || process.env.PORT || 3000;        
         app.listen(PORT, () => {
             console.log(`Skynet is fully operational at http://localhost:${PORT}`);
         });        
     } catch(error) {
-        console.error("Skynet no permite la conección...", error);
+        console.error('Skynet no permite la conección...', error);
     }
 })();

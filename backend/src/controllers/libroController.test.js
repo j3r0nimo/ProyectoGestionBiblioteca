@@ -4,16 +4,19 @@ import request from 'supertest';
 // 1. Importa la App de Express
 import app from '../app.js';
 
-// 2. Importa el servicio que el controlador va a llamar para poder mockearlo
+// 2. Importa el servicio para mockearlo
 import * as libroServicio from '../services/libroService.js';
 
-// 3. Burlamos (mock) el módulo de servicio completo
-// No queremos que el test hable con la base de datos, solo que pruebe la RUTA.
+// 3. Burla (mock) el módulo de servicio completo
+// No queremos que el test hable con la base de datos, solo que pruebe la ruta.
 vi.mock('../services/libroService.js', () => ({
-  // Burlamos solo las funciones que nuestro controlador usa
   getLibroByIdService: vi.fn(),
-  // si se probara POST, también haríamos mock de newLibroService
+  // ... (si probáramos POST, también haríamos mock de newLibroService)
 }));
+
+// Un ID falso que parece un ObjectId de Mongo válido (24 caracteres hex)
+// Esto permite pasar el middleware 'validateObjectId'.
+const mockValidMongoId = '60d0fe4f5311236168a109cb';
 
 // Limpia los mocks antes de cada test
 beforeEach(() => {
@@ -24,11 +27,12 @@ beforeEach(() => {
 describe('GET /libros/:id', () => {
   it('debe retornar 200 y el libro si se encuentra', async () => {
     // 1. Arrange (Preparar)
-    const idTest = '12345';
+    // Usa el ID válido
+    const idTest = mockValidMongoId;
     const mockLibro = {
       _id: idTest,
       tituloLibro: 'Test de Supertest',
-      portadaImagePath: 'test.jpg', // Añadimos esto para probar la lógica de 'buildFullUrl'
+      portadaImagePath: 'test.jpg', // Para probar la lógica de 'buildFullUrl'
     };
 
     // Le decimos al mock del servicio qué debe devolver
@@ -46,13 +50,14 @@ describe('GET /libros/:id', () => {
     expect(libroServicio.getLibroByIdService).toHaveBeenCalledWith(idTest);
 
     // Verifica que la lógica de 'portada' funciona
-    // El controlador getLibroById añade la URL completa
     expect(res.body.portada).toContain('http://');
   });
 
   it('debe retornar 404 si el libro no se encuentra', async () => {
     // 1. Arrange
-    const idTest = 'id-falso';
+    // Usa el ID válido (el middleware lo dejará pasar)
+    const idTest = mockValidMongoId;
+
     // El servicio devuelve null (no encontrado)
     libroServicio.getLibroByIdService.mockResolvedValue(null);
 
@@ -61,14 +66,16 @@ describe('GET /libros/:id', () => {
 
     // 3. Assert
     expect(res.status).toBe(404); // Código 404
-    // Verifica el mensaje de error que está definidido en el controlador
-    expect(res.body.message).toBe('Libro no encontrado');
+    // Verifica el mensaje de error que está definido en el controlador
+    expect(res.body.error).toBe('Libro no encontrado');
   });
 
   it('debe retornar 500 si el servicio falla', async () => {
     // 1. Arrange
-    const idTest = 'id-error';
+    // Usa el ID válido (el middleware lo dejará pasar)
+    const idTest = mockValidMongoId;
     const errorMsg = 'Fallo de la base de datos';
+
     // Simula un error en la capa de servicio
     libroServicio.getLibroByIdService.mockRejectedValue(new Error(errorMsg));
 
@@ -77,6 +84,6 @@ describe('GET /libros/:id', () => {
 
     // 3. Assert
     expect(res.status).toBe(500); // El middleware errorHandler debe atrapar esto
-    expect(res.body.message).toContain('Error al obtener el libro');
+    expect(res.body.error).toContain('Error al obtener el libro');
   });
 });

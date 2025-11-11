@@ -6,7 +6,7 @@ Este documento explica la configuración de Husky y las herramientas de calidad 
 
 El proyecto utiliza `husky` para ejecutar "hooks" de Git que automatizan la revisión y el formateo del código. Esto asegura que todo el código subido al repositorio mantenga un estilo consistente y pase las revisiones básicas.
 
-Hay dos hooks configurados: `pre-commit` y `pre-push` (Aún no configurado).
+Hay dos hooks configurados: `pre-commit` y `pre-push`.
 
 ---
 
@@ -28,4 +28,11 @@ Este hook se ejecuta automáticamente **cada vez que se intenta hacer un `git co
 3. Ejecuta `eslint --fix` para arreglar problemas.
 4. Ejecuta `npx prettier --write` para formatear el código.
 5. Si ambos tienen éxito, el commit se completa con el código ya limpio.
+
+## 2. Hook `pre-push` (ejecución de tests)
+
+1. Luego de el commit, cuando se haga `git push`
+2. Se va a activar el hook pre-push
+3. Se ejecutarán todos los tests.
+4. Si los test pasan, git procede con el push.
 

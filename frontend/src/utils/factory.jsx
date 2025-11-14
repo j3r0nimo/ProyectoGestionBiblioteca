@@ -8,6 +8,6 @@ export function FormFactory({ tipo }) {
     case "revista":
       return <FormRevistas />;
     default:
-      return <p>Selecciona un tipo de formulario</p>;
+      return <h2>Selecciona un tipo de formulario</h2>;
   }
 }

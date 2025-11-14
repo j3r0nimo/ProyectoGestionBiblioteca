@@ -1,12 +1,16 @@
-export default function FormLibro() {
+export default function FormOtro() {
 
     return (
         <>
-            <h3>ingrese datos de libro:</h3>
+            <h3>ingrese datos:</h3>
             <form id="añadir">
 
-                <label for="isbn">ISBN:</label>
-                <input name="isbn" id="isbn" type="text" /> <br />
+                <label for="libro">Tipo:</label>
+                <select name="libro" id="libro">
+                    <option value="Manual">Manual</option>
+                    <option value="Catalogo">Catalogo</option>
+                    <option value="Folleto">Folleto</option>
+                </select><br /> 
 
                 <label for="titulo">Titulo:</label>
                 <input name="titulo" id="titulo" type="text" /><br />
@@ -40,7 +44,7 @@ export default function FormLibro() {
 
             </form>
             <div>
-                <button type="submit" form="añadir">Añadir</button>
+                <button type="onClick" form="añadir">Añadir</button>
             </div>
         </>
 

@@ -16,6 +16,10 @@ export default function App() {
         Subir Revista
       </button>
 
+      <button onClick={() => setFormActivo("otro")}>
+        Subir otro tipo
+      </button>
+
       <hr />
 
       <FormFactory tipo={formActivo} />

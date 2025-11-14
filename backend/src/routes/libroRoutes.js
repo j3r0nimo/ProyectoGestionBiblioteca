@@ -1,11 +1,25 @@
 import express from 'express';
+import multer from 'multer';
+import path from 'path';
 
 import * as libroControlador from '../controllers/libroController.js';
 import { validateObjectId } from '../middlewares/validateObjectId.js';
 
 const router = express.Router();
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    const extension = path.extname(file.originalname);
+    const nombreBase = path.basename(file.originalname, extension);
+    const nombreFinal = `${nombreBase}-${Date.now()}${extension}`;
+    cb(null, nombreFinal);
+  }
+});
 
-/*      Rule of Thumb: Always declare routes from most specific → most general:
+// 2. Inicializamos multer con nuestra configuración de 'storage'
+const upload = multer({ storage: storage });/*      Rule of Thumb: Always declare routes from most specific → most general:
 
         /productos/nuevo → specific string
         /productos/:id/editar → dynamic + specific
@@ -13,7 +27,7 @@ const router = express.Router();
 
 router.put('/:id', validateObjectId('id'), libroControlador.updateLibro);       // mas específico que GET/:id, va antes de GET/:id
 router.get('/', libroControlador.getLibros);                                    // Root siempre antes de los parametros dinamicos
-router.post('/', libroControlador.newLibro);
+router.post('/', upload.single('portada'), libroControlador.newLibro);
 router.delete('/:id', validateObjectId('id'), libroControlador.deleteLibro);    // dinámico
 router.get('/:id', validateObjectId('id'), libroControlador.getLibroById);      // GET dinamico siempre al final
 export default router;

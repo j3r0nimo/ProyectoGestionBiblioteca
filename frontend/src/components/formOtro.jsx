@@ -84,7 +84,7 @@ export default function FormOtro() {
                     <option value="Manual">Manual</option>
                     <option value="Catalogo">Catalogo</option>
                     <option value="Folleto">Folleto</option>
-                </select><br />
+                </select>
                 {errores.tipo && <div style={{ color: 'red' }}>{errores.tipo}</div>}
 
                 <label htmlFor="tituloLibro">Titulo:</label>
@@ -94,7 +94,7 @@ export default function FormOtro() {
                     type="text"
                     value={formData.tituloLibro}
                     onChange={handleFormChange}
-                /><br />
+                />
                 {errores.tituloLibro && <div style={{ color: 'red' }}>{errores.tituloLibro}</div>}
 
                 <label htmlFor="autor">Autor:</label>
@@ -104,7 +104,7 @@ export default function FormOtro() {
                     type="text"
                     value={formData.autor}
                     onChange={handleFormChange}
-                /><br />
+                />
                 {errores.autor && <div style={{ color: 'red' }}>{errores.autor}</div>}
 
                 <label htmlFor="idioma-select">Idioma:</label>
@@ -118,7 +118,7 @@ export default function FormOtro() {
                     <option value="Ingles">Ingles</option>
                     <option value="Portugues">Portugues</option>
                     <option value="Griego">Griego</option>
-                </select><br />
+                </select>
                 {errores.idioma && <div style={{ color: 'red' }}>{errores.idioma}</div>}
 
                 <label htmlFor="editorial">Editorial:</label>
@@ -128,7 +128,7 @@ export default function FormOtro() {
                     type="text"
                     value={formData.editorial}
                     onChange={handleFormChange}
-                /><br />
+                />
                 {errores.editorial && <div style={{ color: 'red' }}>{errores.editorial}</div>}
 
                 <label htmlFor="medidas">Medidas:</label>
@@ -138,7 +138,7 @@ export default function FormOtro() {
                     type="text"
                     value={formData.medidas}
                     onChange={handleFormChange}
-                /><br />
+                />
                 {errores.medidas && <div style={{ color: 'red' }}>{errores.medidas}</div>}
 
                 <label htmlFor="genero">Genero:</label>
@@ -148,7 +148,7 @@ export default function FormOtro() {
                     type="text"
                     value={formData.genero}
                     onChange={handleFormChange}
-                /><br />
+                />
                 {errores.genero && <div style={{ color: 'red' }}>{errores.genero}</div>}
 
                 <label htmlFor="subgenero">Subgenero:</label>
@@ -158,7 +158,7 @@ export default function FormOtro() {
                     type="text"
                     value={formData.subgenero}
                     onChange={handleFormChange}
-                /><br />
+                />
                 {errores.subgenero && <div style={{ color: 'red' }}>{errores.subgenero}</div>}
 
                 <label htmlFor="anio">Año:</label>
@@ -168,7 +168,7 @@ export default function FormOtro() {
                     type="number"
                     value={formData.anio}
                     onChange={handleFormChange}
-                /><br />
+                />
                 {errores.anio && <div style={{ color: 'red' }}>{errores.anio}</div>}
 
                 <label htmlFor="paginas">Paginas:</label>
@@ -178,7 +178,7 @@ export default function FormOtro() {
                     type="number"
                     value={formData.paginas}
                     onChange={handleFormChange}
-                /><br />
+                />
                 {errores.paginas && <div style={{ color: 'red' }}>{errores.paginas}</div>}
 
                 <label htmlFor="portada">Portada:</label>

@@ -21,20 +21,25 @@ function ListLibros() {
     const prevPage = () => {
         if (meta?.hasPrev) setPage(page - 1);
     }
-    const handleSearch = () => {
+    const handleSearch = (event) => {
+        event.preventDefault();
+
         setKeyword(searchTerm);
         setPage(1);
     }
     return (
         <>
             <div>
-                <input
-                    type="text"
-                    placeholder="Buscar por título, género..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <button onClick={handleSearch}>Buscar</button>
+                <form id="buscar" onSubmit={handleSearch}>
+                    <input
+                        type="text"
+                        placeholder="Buscar por título, género..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    /> 
+                    <button type="submit" id="buscar">Buscar</button>
+                </form>
+
             </div>
             <ul className="lista">
                 {libros.length === 0 ? (

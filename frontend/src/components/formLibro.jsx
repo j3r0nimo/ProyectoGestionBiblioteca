@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { createLibro } from '../services/libros';
 import api from '../services/api';
 
-// <<< 1. Define el estado inicial en un objeto
 const initialState = {
     tituloLibro: '',
     autor: '',

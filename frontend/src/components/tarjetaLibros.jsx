@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 
-function Tarjeta({ libro }) {
+function TarjetaLibro({ libro }) {
     const ticketRef = useRef();
 
     return (
@@ -17,4 +17,4 @@ function Tarjeta({ libro }) {
     );
 }
 
-export default Tarjeta;
+export default TarjetaLibro;

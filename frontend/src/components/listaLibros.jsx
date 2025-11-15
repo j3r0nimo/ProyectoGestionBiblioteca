@@ -1,9 +1,9 @@
-import Tarjeta from "./tarjeta"
+import TarjetaLibro from "./tarjetaLibros"
 
 function Lista({ libros }) {
     return (
         libros.map(l =>
-            <Tarjeta key={l._id} libro={l} />
+            <TarjetaLibro key={l._id} libro={l} />
         )
     )
 

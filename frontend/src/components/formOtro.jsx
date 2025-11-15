@@ -1,66 +1,72 @@
 import { useState } from 'react';
 import { createLibro } from '../services/libros';
 
-export default function FormLibro() {
-    const [tipo, setTipo] = useState('');
-    const [tituloLibro, setTituloLibro] = useState('');
-    const [autor, setAutor] = useState('');
-    const [idioma, setIdioma] = useState('');
-    const [editorial, setEditorial] = useState('');
-    const [medidas, setMedidas] = useState('');
-    const [genero, setGenero] = useState('');
-    const [subgenero, setSubgenero] = useState('');
-    const [anio, setAnio] = useState(0);
-    const [paginas, setPaginas] = useState(0);
+const initialState = {
+    tipo: '',
+    tituloLibro: '',
+    autor: '',
+    idioma: '',
+    editorial: '',
+    medidas: '',
+    genero: '',
+    subgenero: '',
+    anio: 0,
+    paginas: 0,
+};
+
+export default function FormOtro() {
+    const [formData, setFormData] = useState(initialState);
     const [portada, setPortada] = useState(null);
-    const [errores, setErrores] = useState({})
+    const [errores, setErrores] = useState({});
+
+    const handleFormChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevData => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
 
     const validarFormulario = () => {
         const nuevosErrores = {};
-
-        if (!tipo) nuevosErrores.tipo = "seleccione tipo";
-        if (!tituloLibro || tituloLibro == "") nuevosErrores.tituloLibro = "ingrese titulo";
-        if (!autor || autor == "") nuevosErrores.autor = "ingrese autor";
-        if (!idioma) nuevosErrores.idioma = "seleccione idioma";
-        if (!editorial || editorial == "") nuevosErrores.editorial = "ingrese editorial";
-        if (!medidas || medidas == "") nuevosErrores.medidas = "ingrese medida";
-        if (!genero || genero == "") nuevosErrores.genero = "ingrese genero";
-        if (!subgenero || subgenero == "") nuevosErrores.subgenero = "ingrese subgenero";
-        if (!anio || isNaN(anio)) nuevosErrores.anio = "ingrese año";
-        if (!paginas || paginas <= 0 || isNaN(paginas)) nuevosErrores.paginas = "ingrese paginas";
+        
+        if (!formData.tipo) nuevosErrores.tipo = "seleccione tipo";
+        if (!formData.tituloLibro || formData.tituloLibro.trim() === "") nuevosErrores.tituloLibro = "ingrese titulo";
+        if (!formData.autor || formData.autor.trim() === "") nuevosErrores.autor = "ingrese autor";
+        if (!formData.idioma) nuevosErrores.idioma = "seleccione idioma";
+        if (!formData.editorial || formData.editorial.trim() === "") nuevosErrores.editorial = "ingrese editorial";
+        if (!formData.medidas || formData.medidas.trim() === "") nuevosErrores.medidas = "ingrese medida";
+        if (!formData.genero || formData.genero.trim() === "") nuevosErrores.genero = "ingrese genero";
+        if (!formData.subgenero || formData.subgenero.trim() === "") nuevosErrores.subgenero = "ingrese subgenero";
+        if (!formData.anio || isNaN(formData.anio)) nuevosErrores.anio = "ingrese año";
+        if (!formData.paginas || isNaN(formData.paginas) || formData.paginas <= 0) nuevosErrores.paginas = "ingrese paginas";
+        
         setErrores(nuevosErrores);
         return Object.keys(nuevosErrores).length === 0;
     };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (!validarFormulario()) return;
-        const formData = new FormData();
-        formData.append('tipo', tipo);
-        formData.append('tituloLibro', tituloLibro);
-        formData.append('autor', autor);
-        formData.append('idioma', idioma);
-        formData.append('editorial', editorial);
-        formData.append('medidas', medidas);
-        formData.append('genero', genero);
-        formData.append('subgenero', subgenero);
-        formData.append('anio', anio);
-        formData.append('paginas', paginas);
-        formData.append('portada', portada);
+        
+        if (!validarFormulario()) return; 
+
+        const payload = new FormData();
+        
+        Object.keys(formData).forEach(key => {
+            payload.append(key, formData[key]);
+        });
+        
+        payload.append('portada', portada);
 
         try {
-            await createLibro(formData);
-            alert('¡Libro subido con éxito!');
-            setTituloLibro('');
-            setAutor('');
-            setIdioma('');
-            setMedidas('');
-            setGenero('');
-            setSubgenero('');
-            setAnio(0);
-            setPaginas(0);
+            await createLibro(payload);
+            alert('¡Publicación subida con éxito!');
+            setFormData(initialState);
             setPortada(null);
+            setErrores({});
+            event.target.reset(); 
         } catch (error) {
-            alert('Error al subir el libro');
+            alert('Error al subir la publicación');
         }
     };
 
@@ -69,9 +75,11 @@ export default function FormLibro() {
             <h2>Ingrese datos</h2>
             <form id="añadir" onSubmit={handleSubmit}>
                 <label htmlFor="tipo-select">Tipo:</label>
-                <select id="tipo-select"
-                    value={tipo}
-                    onChange={(e) => setTipo(e.target.value)}>
+                <select 
+                    id="tipo-select"
+                    name="tipo"
+                    value={formData.tipo}
+                    onChange={handleFormChange}>
                     <option value="">-Elija una opcion-</option>
                     <option value="Manual">Manual</option>
                     <option value="Catalogo">Catalogo</option>
@@ -84,8 +92,8 @@ export default function FormLibro() {
                     name="tituloLibro"
                     id="tituloLibro"
                     type="text"
-                    value={tituloLibro}
-                    onChange={(e) => setTituloLibro(e.target.value)}
+                    value={formData.tituloLibro}
+                    onChange={handleFormChange}
                 /><br />
                 {errores.tituloLibro && <div style={{ color: 'red' }}>{errores.tituloLibro}</div>}
 
@@ -94,15 +102,17 @@ export default function FormLibro() {
                     name="autor"
                     id="autor"
                     type="text"
-                    value={autor}
-                    onChange={(e) => setAutor(e.target.value)}
+                    value={formData.autor}
+                    onChange={handleFormChange}
                 /><br />
                 {errores.autor && <div style={{ color: 'red' }}>{errores.autor}</div>}
 
                 <label htmlFor="idioma-select">Idioma:</label>
-                <select id="idioma-select"
-                    value={idioma}
-                    onChange={(e) => setIdioma(e.target.value)}>
+                <select 
+                    id="idioma-select"
+                    name="idioma"
+                    value={formData.idioma}
+                    onChange={handleFormChange}>
                     <option value="">-Elija una opcion-</option>
                     <option value="Español">Español</option>
                     <option value="Ingles">Ingles</option>
@@ -116,8 +126,8 @@ export default function FormLibro() {
                     name="editorial"
                     id="editorial"
                     type="text"
-                    value={editorial}
-                    onChange={(e) => setEditorial(e.target.value)}
+                    value={formData.editorial}
+                    onChange={handleFormChange}
                 /><br />
                 {errores.editorial && <div style={{ color: 'red' }}>{errores.editorial}</div>}
 
@@ -126,8 +136,8 @@ export default function FormLibro() {
                     name="medidas"
                     id="medidas"
                     type="text"
-                    value={medidas}
-                    onChange={(e) => setMedidas(e.target.value)}
+                    value={formData.medidas}
+                    onChange={handleFormChange}
                 /><br />
                 {errores.medidas && <div style={{ color: 'red' }}>{errores.medidas}</div>}
 
@@ -136,8 +146,8 @@ export default function FormLibro() {
                     name="genero"
                     id="genero"
                     type="text"
-                    value={genero}
-                    onChange={(e) => setGenero(e.target.value)}
+                    value={formData.genero}
+                    onChange={handleFormChange}
                 /><br />
                 {errores.genero && <div style={{ color: 'red' }}>{errores.genero}</div>}
 
@@ -146,8 +156,8 @@ export default function FormLibro() {
                     name="subgenero"
                     id="subgenero"
                     type="text"
-                    value={subgenero}
-                    onChange={(e) => setSubgenero(e.target.value)}
+                    value={formData.subgenero}
+                    onChange={handleFormChange}
                 /><br />
                 {errores.subgenero && <div style={{ color: 'red' }}>{errores.subgenero}</div>}
 
@@ -156,8 +166,8 @@ export default function FormLibro() {
                     name="anio"
                     id="anio"
                     type="number"
-                    value={anio}
-                    onChange={(e) => setAnio(e.target.value)}
+                    value={formData.anio}
+                    onChange={handleFormChange}
                 /><br />
                 {errores.anio && <div style={{ color: 'red' }}>{errores.anio}</div>}
 
@@ -166,8 +176,8 @@ export default function FormLibro() {
                     name="paginas"
                     id="paginas"
                     type="number"
-                    value={paginas}
-                    onChange={(e) => setPaginas(e.target.value)}
+                    value={formData.paginas}
+                    onChange={handleFormChange}
                 /><br />
                 {errores.paginas && <div style={{ color: 'red' }}>{errores.paginas}</div>}
 

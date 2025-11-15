@@ -1,11 +1,12 @@
 import api from "./api";
+
 // devuelve todos los libros de manera paginada
-export const getLibros = async (page = 1, limit = 10) => {
-    const res = await api.get(`/libros?page=${page}&limit=${limit}`);
+export const getLibros = async (page = 1, limit = 10, keyword = '') => {
+    const res = await api.get(`/libros?page=${page}&limit=${limit}&keyword=${keyword}`);
     return res.data
 }
-// devuelve un libro dependiendo de su id
 
+// devuelve un libro dependiendo de su id
 export const getLibroById = async (id) => {
     try {
         const res = await api.get(`/libros/${id}`);
@@ -27,6 +28,7 @@ export const createLibro = async (formData) => {
     }
 }
 
+//borra libro pasandole la id del libro a borrar
 export const deleteLibro = async (id) => {
     try {
         const res = await api.delete(`/libros/${id}`);

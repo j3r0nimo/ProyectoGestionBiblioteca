@@ -1,6 +1,38 @@
 import api from "./api";
-
-export const getLibros = async (page = 1, limit = 10) =>{
+// devuelve todos los libros de manera paginada
+export const getLibros = async (page = 1, limit = 10) => {
     const res = await api.get(`/libros?page=${page}&limit=${limit}`);
     return res.data
+}
+// devuelve un libro dependiendo de su id
+
+export const getLibroById = async (id) => {
+    try {
+        const res = await api.get(`/libros/${id}`);
+        return res.data;
+    } catch (error) {
+        console.error("Error al obtener el libro por ID:", error);
+        throw error;
+    }
+}
+
+//crea libro pasandole informacion desde un formulario
+export const createLibro = async (formData) => {
+    try {
+        const res = await api.post('/libros', formData);
+        return res.data;
+    } catch (error) {
+        console.error("Error al crear:", error.response?.data || error.message);
+        throw error;
+    }
+}
+
+export const deleteLibro = async (id) => {
+    try {
+        const res = await api.delete(`/libros/${id}`);
+        return res.data;
+    } catch (error) {
+        console.error("Error al borrar el libro:", error);
+        throw error;
+    }
 }

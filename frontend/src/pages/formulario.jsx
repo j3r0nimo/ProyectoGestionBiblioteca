@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FormFactory } from "../utils/factory";
+import { FormFactory } from "../components/factory";
 
 export default function App() {
   const [formActivo, setFormActivo] = useState(null);

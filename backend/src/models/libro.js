@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const libroSchema = new mongoose.Schema({
     tipo: {
         type: String,
-        enum: ['Libro','Revista','Manual','Folleto','Catalogo'],
+        enum: ['Libro', 'Revista', 'Manual', 'Folleto', 'Catalogo'],
         required: true
     },
     isbn: {
@@ -15,11 +15,11 @@ const libroSchema = new mongoose.Schema({
         },
         validate: {
             validator: function (v) {
-            // If 'isbn' is required (because 'tipo' is 'Libro' and 'anio >= 1970')
-            if (this.tipo === 'Libro' && this.anio >= 1970) {
-                return !!v;  // Ensure 'isbn' is not empty
-            }
-            return true;  // For other cases, no validation required
+                // If 'isbn' is required (because 'tipo' is 'Libro' and 'anio >= 1970')
+                if (this.tipo === 'Libro' && this.anio >= 1970) {
+                    return !!v;  // Ensure 'isbn' is not empty
+                }
+                return true;  // For other cases, no validation required
             },
             message: 'El ISBN es obligatorio si la publicación es un libro posterior a 1970'
         },
@@ -35,14 +35,16 @@ const libroSchema = new mongoose.Schema({
         },
         validate: {
             validator: function (v) {
-            // If 'issn' is required (because 'tipo' is 'Revista' and 'anio >= 1971')
-            if (this.tipo === 'Revista' && this.anio >= 1971) {
-                return !!v;  // Ensure 'issn' is not empty
-            }
-            return true;  // For other cases, no validation required
+                // If 'issn' is required (because 'tipo' is 'Revista' and 'anio >= 1971')
+                if (this.tipo === 'Revista' && this.anio >= 1971) {
+                    return !!v;  // Ensure 'issn' is not empty
+                }
+                return true;  // For other cases, no validation required
             },
             message: 'El ISSN es obligatorio si la publicación es una revista posterior a 1971'
-        }        
+        },
+        unique: true,
+        sparse: true
     },
     tituloLibro: {
         type: String,
@@ -57,7 +59,7 @@ const libroSchema = new mongoose.Schema({
     idioma: {
         type: String,
         enum: {
-            values: ['Español','Ingles','Portugues','Griego'],
+            values: ['Español', 'Ingles', 'Portugues', 'Griego'],
             message: 'Español, Ingles, Portugues, Griego'
         },
         required: [true, 'Seleccione un idioma']
@@ -70,7 +72,7 @@ const libroSchema = new mongoose.Schema({
     medidas: {
         type: String,
         required: [true, 'Ingrese medidas en cms: 22.5 x 12.8'],
-        trim:true
+        trim: true
     },
     genero: {
         type: String,
@@ -84,7 +86,7 @@ const libroSchema = new mongoose.Schema({
     },
     mes: {
         type: String,
-        enum: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+        enum: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         required: false
     },
     anio: {
@@ -100,10 +102,10 @@ const libroSchema = new mongoose.Schema({
         required: false,
         trim: true
     },
-    },{
-        collection: 'libros',
-        timestamps: true
-    }
+}, {
+    collection: 'libros',
+    timestamps: true
+}
 );
 
 export default mongoose.model('Libro', libroSchema);

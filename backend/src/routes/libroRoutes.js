@@ -30,6 +30,9 @@ router.get('/', libroControlador.getLibros);                                    
 router.post('/', upload.single('portada'), libroControlador.newLibro);
 router.delete('/:id', validateObjectId('id'), libroControlador.deleteLibro);    // dinámico
 router.get('/:id', validateObjectId('id'), libroControlador.getLibroById);      // GET dinamico siempre al final
+router.get('/isbn/:isbn', libroControlador.getLibroByIsbn);                     // GET en base a isbn del libro
+router.get('/issn/:issn', libroControlador.getLibroByIssn);                     // GET en base a issn del libro
+
 export default router;
 
 

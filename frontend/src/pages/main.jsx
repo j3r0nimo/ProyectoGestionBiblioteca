@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getLibros } from "../services/libros";
+import Lista from "../components/lista";
 function ListLibros() {
     const [libros, setLibros] = useState([])
     const [page, setPage] = useState(1)
@@ -20,10 +21,14 @@ function ListLibros() {
     }
     return (
         <>
-            <ul>
-                {libros.map(l => 
-                <li key={l._id}><img src={l.portada} alt="" width={50}/>{l.tituloLibro}</li>
-                )}
+            <ul className="lista">
+                {libros.length === 0 ? (
+                    <p>no hay libros</p>
+                ) : (
+                    <Lista libros={libros}/>
+                )
+                }
+
             </ul>
             <button onClick={prevPage} disabled={!meta?.hasPrev}>Anterior</button>
             <button onClick={nextPage} disabled={!meta?.hasNext}>Siguiente</button>

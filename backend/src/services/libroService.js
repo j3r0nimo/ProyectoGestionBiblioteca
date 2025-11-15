@@ -62,6 +62,30 @@ export const getLibroByIdService = async (id) => {
 
 
 
+// RETORNAR EL LIBRO POR SU /:isbn
+export const getLibroByIsbnService = async (isbn) => {
+  const libroByIsbn = await Libro.findOne({ isbn: isbn }).lean();
+
+  if (!libroByIsbn) return null;
+  
+  return libroByIsbn; 
+};
+
+
+
+
+// RETORNAR EL LIBRO POR SU /:issn
+export const getLibroByIssnService = async (issn) => {
+  const libroByIssn = await Libro.findOne({ issn: issn }).lean();
+
+  if (!libroByIssn) return null;
+  
+  return libroByIssn; 
+};
+
+
+
+
 // CREAR UN NUEVO LIBRO
 export const newLibroService = async (data) => {
     const libro = new Libro(data);

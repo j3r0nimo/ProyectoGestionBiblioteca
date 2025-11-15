@@ -84,6 +84,55 @@ export const getLibroById = async (req, res, next) => {
 
 
 
+// RESPONDER CON UN LIBRO POR SU /:isbn
+export const getLibroByIsbn = async (req, res, next) => {
+    try {
+        const { isbn } = req.params;
+        const libro = await libroServicio.getLibroByIsbnService(isbn);
+
+        if (!libro) {
+            return next(createError(404, 'Libro no encontrado con ese ISBN'));
+        }
+
+        // Al responder, añadir la url a la imagen de la tapa
+        const responseData = {
+            ...libro,
+            portada: buildFullUrl(req, libro.portadaImagePath)
+        };
+
+        res.status(200).json(responseData);
+    } catch (error) {
+        return next(createError(500, `Error al obtener el libro por ISBN. ${error.message}`));
+    }
+};
+
+
+
+
+// RESPONDER CON UN LIBRO POR SU /:issn
+export const getLibroByIssn = async (req, res, next) => {
+    try {
+        const { issn } = req.params;
+        const libro = await libroServicio.getLibroByIssnService(issn);
+
+        if (!libro) {
+            return next(createError(404, 'Libro no encontrado con ese ISSN'));
+        }
+
+        // Al responder, añadir la url a la imagen de la tapa
+        const responseData = {
+            ...libro,
+            portada: buildFullUrl(req, libro.portadaImagePath)
+        };
+
+        res.status(200).json(responseData);
+    } catch (error) {
+        return next(createError(500, `Error al obtener el libro por ISSN. ${error.message}`));
+    }
+};
+
+
+
 
 // RESPONDER CON LA CREACION DE UN NUEVO LIBRO
 export const newLibro = async (req, res, next) => {

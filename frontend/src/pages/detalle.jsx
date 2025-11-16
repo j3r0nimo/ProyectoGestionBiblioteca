@@ -100,6 +100,11 @@ export default function LibroDetalle() {
         <div>
             <LibroInfo libro={libro} onDeleteLibro={handleDeleteLibro} />
 
+            <Link to={`/formulario/editar/${libro._id}`}>
+                <button>
+                    Editar Libro
+                </button>
+            </Link>
             <hr />
 
             {!mostrarFormulario && (

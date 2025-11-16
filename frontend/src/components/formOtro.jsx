@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { createLibro } from '../services/libros';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { createLibro, updateLibro } from '../services/libros';
 
 const initialState = {
     tipo: '',
@@ -14,11 +15,28 @@ const initialState = {
     paginas: 0,
 };
 
-export default function FormOtro() {
+export default function FormOtro({ libroAEditar }) {
     const [formData, setFormData] = useState(initialState);
     const [portada, setPortada] = useState(null);
     const [errores, setErrores] = useState({});
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        if (libroAEditar) {
+            setFormData({
+                tipo: libroAEditar.tipo || '',
+                tituloLibro: libroAEditar.tituloLibro || '',
+                autor: libroAEditar.autor || '',
+                idioma: libroAEditar.idioma || '',
+                editorial: libroAEditar.editorial || '',
+                medidas: libroAEditar.medidas || '',
+                genero: libroAEditar.genero || '',
+                subgenero: libroAEditar.subgenero || '',
+                anio: libroAEditar.anio || 0,
+                paginas: libroAEditar.paginas || 0
+            });
+        }
+    }, [libroAEditar]);
     const handleFormChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevData => ({
@@ -27,9 +45,9 @@ export default function FormOtro() {
         }));
     };
 
-    const validarFormulario = () => {
+    const validarFormulario = async () => {
         const nuevosErrores = {};
-        
+
         if (!formData.tipo) nuevosErrores.tipo = "seleccione tipo";
         if (!formData.tituloLibro || formData.tituloLibro.trim() === "") nuevosErrores.tituloLibro = "ingrese titulo";
         if (!formData.autor || formData.autor.trim() === "") nuevosErrores.autor = "ingrese autor";
@@ -40,33 +58,41 @@ export default function FormOtro() {
         if (!formData.subgenero || formData.subgenero.trim() === "") nuevosErrores.subgenero = "ingrese subgenero";
         if (!formData.anio || isNaN(formData.anio)) nuevosErrores.anio = "ingrese año";
         if (!formData.paginas || isNaN(formData.paginas) || formData.paginas <= 0) nuevosErrores.paginas = "ingrese paginas";
-        
+
         setErrores(nuevosErrores);
         return Object.keys(nuevosErrores).length === 0;
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
-        if (!validarFormulario()) return; 
+
+        if (!validarFormulario()) return;
 
         const payload = new FormData();
-        
+
         Object.keys(formData).forEach(key => {
             payload.append(key, formData[key]);
         });
-        
-        payload.append('portada', portada);
+
+        if (portada) {
+            payload.append('portada', portada);
+        }
 
         try {
-            await createLibro(payload);
-            alert('¡Publicación subida con éxito!');
-            setFormData(initialState);
-            setPortada(null);
-            setErrores({});
-            event.target.reset(); 
+            if (libroAEditar) {
+                await updateLibro(libroAEditar._id, payload);
+                alert('¡Revista actualizada con éxito!');
+                navigate(`/libros/${libroAEditar._id}`);
+            } else {
+                await createLibro(payload);
+                alert('Revista subida con éxito!');
+                setFormData(initialState);
+                setPortada(null);
+                setErrores({});
+                event.target.reset();
+            }
         } catch (error) {
-            alert('Error al subir la publicación');
+            alert(libroAEditar ? 'Error al actualizar' : 'Error al subir');
         }
     };
 
@@ -75,7 +101,7 @@ export default function FormOtro() {
             <h2>Ingrese datos</h2>
             <form id="añadir" onSubmit={handleSubmit}>
                 <label htmlFor="tipo-select">Tipo:</label>
-                <select 
+                <select
                     id="tipo-select"
                     name="tipo"
                     value={formData.tipo}
@@ -108,7 +134,7 @@ export default function FormOtro() {
                 {errores.autor && <div style={{ color: 'red' }}>{errores.autor}</div>}
 
                 <label htmlFor="idioma-select">Idioma:</label>
-                <select 
+                <select
                     id="idioma-select"
                     name="idioma"
                     value={formData.idioma}
@@ -191,7 +217,14 @@ export default function FormOtro() {
                 />
 
                 <div>
-                    <button type="submit" form="añadir">Añadir</button>
+                    <button type="submit" form="añadir">
+                        {libroAEditar ? 'Actualizar' : 'Añadir'}
+                    </button>
+                    {libroAEditar && (
+                        <button type="button" onClick={() => navigate(`/libros/${libroAEditar._id}`)}>
+                            Cancelar
+                        </button>
+                    )}
                 </div>
             </form>
         </>

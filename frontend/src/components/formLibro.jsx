@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { createLibro } from '../services/libros';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { createLibro, updateLibro } from '../services/libros';
 import api from '../services/api';
 
 const initialState = {
@@ -15,10 +16,28 @@ const initialState = {
     paginas: 0,
 };
 
-export default function FormLibro() {
+export default function FormLibro({ libroAEditar }) {
     const [formData, setFormData] = useState(initialState);
     const [portada, setPortada] = useState(null);
     const [errores, setErrores] = useState({});
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (libroAEditar) {
+            setFormData({
+                tituloLibro: libroAEditar.tituloLibro || '',
+                autor: libroAEditar.autor || '',
+                isbn: libroAEditar.isbn || '',
+                idioma: libroAEditar.idioma || '',
+                editorial: libroAEditar.editorial || '',
+                medidas: libroAEditar.medidas || '',
+                genero: libroAEditar.genero || '',
+                subgenero: libroAEditar.subgenero || '',
+                anio: libroAEditar.anio || 0,
+                paginas: libroAEditar.paginas || 0
+            });
+        }
+    }, [libroAEditar]);
 
     const handleFormChange = (e) => {
         const { name, value } = e.target;
@@ -31,14 +50,16 @@ export default function FormLibro() {
     const validarFormulario = async () => {
         const nuevosErrores = {};
 
-        try {
-            const respuesta = await api.get(`/libros/isbn/${formData.isbn}`);
-            if (respuesta.data) {
-                nuevosErrores.isbn = "el isbn ya esta en el sistema";
-            }
-        } catch (err) {
-            if (err.response?.status !== 404) {
-                nuevosErrores.isbn = "Error al verificar isbn"; 
+        if (formData.isbn && (!libroAEditar || libroAEditar.isbn !== formData.isbn)) {
+            try {
+                const respuesta = await api.get(`/libros/isbn/${formData.isbn}`);
+                if (respuesta.data) {
+                    nuevosErrores.isbn = "el isbn ya esta en el sistema";
+                }
+            } catch (err) {
+                if (err.response?.status !== 404) {
+                    nuevosErrores.isbn = "Error al verificar isbn";
+                }
             }
         }
 
@@ -63,23 +84,32 @@ export default function FormLibro() {
         const esValido = await validarFormulario();
         if (!esValido) return;
 
-        const payload = new FormData(); 
+        const payload = new FormData();
+
         payload.append('tipo', 'Libro');
         Object.keys(formData).forEach(key => {
             payload.append(key, formData[key]);
         });
 
-        payload.append('portada', portada);
+        if (portada) {
+            payload.append('portada', portada);
+        }
 
         try {
-            await createLibro(payload);
-            alert('¡Libro subido con éxito!');
-            setFormData(initialState);
-            setPortada(null);
-            setErrores({});
-            event.target.reset();
+            if (libroAEditar) {
+                await updateLibro(libroAEditar._id, payload);
+                alert('¡Publicación actualizada con éxito!');
+                navigate(`/libros/${libroAEditar._id}`);
+            } else {
+                await createLibro(payload);
+                alert('¡Publicación subida con éxito!');
+                setFormData(initialState);
+                setPortada(null);
+                setErrores({});
+                event.target.reset();
+            }
         } catch (error) {
-            alert('Error al subir el libro');
+            alert(libroAEditar ? 'Error al actualizar' : 'Error al subir la publicación');
         }
     };
 
@@ -202,7 +232,14 @@ export default function FormLibro() {
                 />
 
                 <div>
-                    <button type="submit" form="añadir">Añadir</button>
+                    <button type="submit" form="añadir">
+                        {libroAEditar ? 'Actualizar' : 'Añadir'}
+                    </button>
+                    {libroAEditar && (
+                        <button type="button" onClick={() => navigate(`/libros/${libroAEditar._id}`)}>
+                            Cancelar
+                        </button>
+                    )}
                 </div>
             </form>
         </>

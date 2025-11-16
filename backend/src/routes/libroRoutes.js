@@ -25,7 +25,7 @@ const upload = multer({ storage: storage });/*      Rule of Thumb: Always declar
         /productos/:id/editar → dynamic + specific
         /productos/:id → catch-all dynamic → ALWAYS LAST        */
 
-router.put('/:id', validateObjectId('id'), libroControlador.updateLibro);       // mas específico que GET/:id, va antes de GET/:id
+router.put('/:id', validateObjectId('id'),upload.single('portada'), libroControlador.updateLibro);       // mas específico que GET/:id, va antes de GET/:id
 router.get('/', libroControlador.getLibros);                                    // Root siempre antes de los parametros dinamicos
 router.post('/', upload.single('portada'), libroControlador.newLibro);
 router.delete('/:id', validateObjectId('id'), libroControlador.deleteLibro);    // dinámico

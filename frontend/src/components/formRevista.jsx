@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { createLibro } from '../services/libros';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { createLibro, updateLibro } from '../services/libros';
 import api from '../services/api';
 
 const initialState = {
@@ -15,10 +16,28 @@ const initialState = {
     paginas: 0,
 };
 
-export default function FormRevista() {
+export default function FormRevista({ libroAEditar }) {
     const [formData, setFormData] = useState(initialState);
     const [portada, setPortada] = useState(null);
     const [errores, setErrores] = useState({});
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+        if (libroAEditar) {
+            setFormData({
+                tituloLibro: libroAEditar.tituloLibro || '',
+                autor: libroAEditar.autor || '',
+                issn: libroAEditar.issn || '',
+                idioma: libroAEditar.idioma || '',
+                editorial: libroAEditar.editorial || '',
+                medidas: libroAEditar.medidas || '',
+                genero: libroAEditar.genero || '',
+                subgenero: libroAEditar.subgenero || '',
+                anio: libroAEditar.anio || 0,
+                paginas: libroAEditar.paginas || 0
+            });
+        }
+    }, [libroAEditar]);
 
     const handleFormChange = (e) => {
         const { name, value } = e.target;
@@ -31,17 +50,18 @@ export default function FormRevista() {
     const validarFormulario = async () => {
         const nuevosErrores = {};
 
-        try {
-            const respuesta = await api.get(`/libros/issn/${formData.issn}`);
-            if (respuesta.data) {
-                nuevosErrores.issn = "el issn ya esta en el sistema";
-            }
-        } catch (err) {
-            if (err.response?.status !== 404) {
-                nuevosErrores.issn = "Error al verificar issn";
+        if (formData.issn && (!libroAEditar || libroAEditar.issn !== formData.issn)) {
+            try {
+                const respuesta = await api.get(`/libros/issn/${formData.issn}`);
+                if (respuesta.data) {
+                    nuevosErrores.issn = "el issn ya esta en el sistema";
+                }
+            } catch (err) {
+                if (err.response?.status !== 404) {
+                    nuevosErrores.issn = "Error al verificar issn";
+                }
             }
         }
-
         if (!formData.issn || formData.issn === "") nuevosErrores.issn = "ingrese issn"
         if (!formData.tituloLibro || formData.tituloLibro === "") nuevosErrores.tituloLibro = "ingrese titulo";
         if (!formData.autor || formData.autor === "") nuevosErrores.autor = "ingrese autor";
@@ -64,22 +84,31 @@ export default function FormRevista() {
         if (!esValido) return;
 
         const payload = new FormData();
+
         payload.append('tipo', 'Revista');
         Object.keys(formData).forEach(key => {
             payload.append(key, formData[key]);
         });
 
-        payload.append('portada', portada);
+        if (portada) {
+            payload.append('portada', portada);
+        }
 
         try {
-            await createLibro(payload);
-            alert('Revista subida con éxito!');
-            setFormData(initialState);
-            setPortada(null);
-            setErrores({});
-            event.target.reset();
+            if (libroAEditar) {
+                await updateLibro(libroAEditar._id, payload);
+                alert('¡Publicación actualizada con éxito!');
+                navigate(`/libros/${libroAEditar._id}`);
+            } else {
+                await createLibro(payload);
+                alert('¡Publicación subida con éxito!');
+                setFormData(initialState);
+                setPortada(null);
+                setErrores({});
+                event.target.reset();
+            }
         } catch (error) {
-            alert('Error al subir');
+            alert(libroAEditar ? 'Error al actualizar' : 'Error al subir la publicación');
         }
     };
 
@@ -201,7 +230,14 @@ export default function FormRevista() {
                 />
 
                 <div>
-                    <button type="submit" form="añadir">Añadir</button>
+                    <button type="submit" form="añadir">
+                        {libroAEditar ? 'Actualizar' : 'Añadir'}
+                    </button>
+                    {libroAEditar && (
+                        <button type="button" onClick={() => navigate(`/libros/${libroAEditar._id}`)}>
+                            Cancelar
+                        </button>
+                    )}
                 </div>
             </form>
         </>

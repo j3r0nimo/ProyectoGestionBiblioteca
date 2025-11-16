@@ -17,6 +17,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Libreria />} />
         <Route path='/formulario' element={<Formulario />} />
+        <Route path="/formulario/editar/:id" element={<Formulario />} />
         <Route path="/libros/:id" element={<LibroDetalle />} />
       </Routes>
     </BrowserRouter>

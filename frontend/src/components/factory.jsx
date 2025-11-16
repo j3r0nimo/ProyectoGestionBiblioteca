@@ -2,12 +2,14 @@ import FormLibro from "./formLibro";
 import FormRevista from "./formRevista";
 import FormOtro from "./formOtro";
 
+//  utilizacion de factory en los formularios
 export function FormFactory({ tipo, libroAEditar }) {
   switch (tipo) {
     case "libro":
       return <FormLibro libroAEditar={libroAEditar} />;
     case "revista":
       return <FormRevista libroAEditar={libroAEditar} />;
+    case "otro":
     case "manual":
     case "catalogo":
     case "folleto":

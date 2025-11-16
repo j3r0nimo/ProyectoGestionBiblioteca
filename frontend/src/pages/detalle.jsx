@@ -28,7 +28,7 @@ export default function LibroDetalle() {
             .finally(() => setLoading(false));
     }, [id]);
 
-
+    // funcion para borrar libro
     const handleDeleteLibro = async () => {
         if (window.confirm("¿Estás seguro de que quieres eliminar este libro? Esta acción también eliminará su contenido asociado.")) {
             try {
@@ -40,7 +40,7 @@ export default function LibroDetalle() {
             }
         }
     };
-
+    // funcion para borrar el contenido relacionado al libro
     const handleDeleteContenido = async (contenidoId) => {
         if (window.confirm("¿Eliminar este artículo?")) {
             try {
@@ -51,7 +51,7 @@ export default function LibroDetalle() {
             }
         }
     };
-
+    // actualiza o sube el contenido, dependiendo de que se le pida
     const handleSaveContenido = async (formData, editingId) => {
         try {
             if (editingId) {
@@ -82,12 +82,12 @@ export default function LibroDetalle() {
             alert("Error al guardar el contenido.");
         }
     };
-
+    // guarda el contenido para editar y muestra el formulario
     const handleEditClick = (item) => {
         setItemParaEditar(item);
         setMostrarFormulario(true);
     };
-
+    // funcion para mostrar el formulario en caso de que se toque el boton editar contenido
     const handleToggleForm = (visible, item = null) => {
         setMostrarFormulario(visible);
         setItemParaEditar(item);
@@ -98,7 +98,7 @@ export default function LibroDetalle() {
 
     return (
         <div>
-            <LibroInfo libro={libro} onDeleteLibro={handleDeleteLibro} />
+            <LibroInfo libro={libro} />
             <button
                 onClick={handleDeleteLibro}
                 style={{ backgroundColor: '#b80000', color: 'white', borderColor: 'transparent' }}>

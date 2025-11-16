@@ -9,12 +9,6 @@ export default function LibroInfo({ libro, onDeleteLibro }) {
             <p><strong>Año:</strong> {libro.anio}</p>
             <p><strong>ISBN:</strong> {libro.isbn || 'N/A'}</p>
             <p><strong>ISSN:</strong> {libro.issn || 'N/A'}</p>
-            <button 
-                onClick={onDeleteLibro} 
-                style={{ backgroundColor: '#b80000', color: 'white', borderColor: 'transparent' }}
-            >
-                Eliminar Libro
-            </button>
         </div>
     );
 }

@@ -185,7 +185,11 @@ export const deleteLibro = async (req, res, next) => {
 export const updateLibro = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const updatedLibro = await libroServicio.updateLibroService(id, req.body);
+        const datosParaActualizar = req.body;
+        if (req.file) {
+            datosParaActualizar.portadaImagePath = `/uploads/${req.file.filename}`;
+        }
+        const updatedLibro = await libroServicio.updateLibroService(id, datosParaActualizar);
         res.status(200).json(updatedLibro);
     } catch (error) {
         return next(createError(400, `Error al actualizar el libro. ${error.message}`));

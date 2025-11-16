@@ -99,6 +99,11 @@ export default function LibroDetalle() {
     return (
         <div>
             <LibroInfo libro={libro} onDeleteLibro={handleDeleteLibro} />
+            <button
+                onClick={handleDeleteLibro}
+                style={{ backgroundColor: '#b80000', color: 'white', borderColor: 'transparent' }}>
+                Eliminar Libro
+            </button>
 
             <Link to={`/formulario/editar/${libro._id}`}>
                 <button>

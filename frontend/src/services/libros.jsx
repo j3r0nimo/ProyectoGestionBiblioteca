@@ -20,7 +20,11 @@ export const getLibroById = async (id) => {
 //crea libro pasandole informacion desde un formulario
 export const createLibro = async (formData) => {
     try {
-        const res = await api.post('/libros', formData);
+        const res = await api.post('/libros', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
         return res.data;
     } catch (error) {
         console.error("Error al crear:", error.response?.data || error.message);
@@ -35,6 +39,21 @@ export const deleteLibro = async (id) => {
         return res.data;
     } catch (error) {
         console.error("Error al borrar el libro:", error);
+        throw error;
+    }
+}
+
+//actualiza usando el id para encontrar el libro y el formData para agregar los datos
+export const updateLibro = async (id, formData) => {
+    try {
+        const res = await api.put(`/libros/${id}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        return res.data
+    } catch (error) {
+        console.error("Error al actualizar el libro:", error);
         throw error;
     }
 }

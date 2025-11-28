@@ -2,27 +2,35 @@
 
 # Backend API
 
-## Integrantes Grupo 6
+## Proyecto
 
-- Jeronimo Baltian Ortiz
-- Jimena Martinez Arana
-- Carlos Alberto Arce
-- Marcos Diaz
+El proyecto del Grupo 6, para su aplicación a la materia Metodología de Sistemas II, es un Sistema de Gestión de Biblioteca Personal, con un servicio accesible por medio de un navegador web.
 
 ---
 
-## Proyecto propuesto & Backend
+## Backend
 
-El proyecto del Grupo 6, para su aplicación a la materia Metodología de Sistemas II, es un Sistema de Gestión de Biblioteca Personal, con un servicio online accesible por medio de un navegador web. Las herramientas y la arquitectura de su diseño son un Backend donde se emplean Node.js, Express y mongoDB para servir los datos, con un concepto de servicio exclusivamente de tipo API, mas un Frontend diseñado en React.js, en ambos casos con el lenguaje javascript.
+El Backend es una API REST, que brinda endpoints para crear, leer, actualizar y eliminar los documentos almacenados en la base de datos. La base de datos almacena dos colecciones, libros y contenido y el diseño del backend sigue un patrón de diseño estándar: modelo, servicio, controlador, rutas y aplicación.
 
-El Backend es una API que permite operar a través de endpoints, los cuales brindan servicios para crear, leer, actualizar y eliminar los documentos almacenados en la base de datos. La base de datos almacena dos colecciones, libros y contenido y el diseño del backend sigue un patrón de diseño estándar: modelo, servicio, controlador, rutas y aplicación.
+---
+
+## Requerimientos
+
+Se requiere tener instalado mongoDB en el sistema local.
+
+---
+
+## Datos iniciales
+
+Los datos iniciales se cargarán mediante el comando npm run seed.
 
 ---
 
 ## Instalación & ejecución del entorno
 
-- Ubicarse dentro de la carpeta **backend**
+- Ubicarse dentro de la carpeta **backend**-
 - npm install
+- npm run seed
 - npm run dev
 
 ---
@@ -50,21 +58,11 @@ Mongoose tiene la característica de no permitir que la conexión pueda duplicar
 
 Por todo lo anterior, la conexión a una base de datos es un lugar perfecto para aplicar el patrón singleton en nuestro proyecto, con un diseño que en vez de crear la conexión ante la llamada, primero verifique si hay una conexión ya instanciada.
 
-## Diseño Singleton en nuestra conexión
+## Integrantes Grupo 6
 
-El proceso de conexión y la aplicación del patrón singleton es:
+- Jeronimo Baltian Ortiz
+- Jimena Martinez Arana
+- Carlos Alberto Arce
+- Marcos Diaz
 
-1. Se crea una variable booleana y se la declara false.
-2. Se inicia la función de conexión.
-3. Si la variable booleana es true, se retorna la conexión que debería existir.
-4. Sabemos que es falsa, por ser la primera oportunidad que se intenta la conexión.
-5. Se inicia un algoritmo try/catch para crear la conexión y atender los errores.
-6. Se crea una constante con los valores para acceder a la base de datos.
-7. Si no se puede acceder, se lanza un error y se detiene la ejecución.
-8. Si se puede acceder, se crea la conexión.
-9. Se declara a la variable booleana inicial como verdadera, fin del try.
-10. El catch se ocupa de la posibilidad de error.
-11. Se exporta la conexión.
-12. La siguiente llamada encontrará que la variable booleana es true.
-13. Esa llamada entonces, recibirá la conexión existente.
-14. Por lo mismo, se detendrá el proceso y no se creará una nueva conexión.
+---

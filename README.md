@@ -1,6 +1,7 @@
 # Proyecto Gestion De Biblioteca Personal
 
-Documentación Técnica y de usuario del sitio de documentación
+Documentación Técnica y de usuario del sitio de documentación.
+Sitio creado con Docusaurus.
 
 ---
 
@@ -14,7 +15,7 @@ Documentación Técnica y de usuario del sitio de documentación
 
 ## Servicio
 
-El sitio de documentación estrá en el puerto localhost:4000
+El sitio de documentación estará en el puerto localhost:4000
 
 ---
 

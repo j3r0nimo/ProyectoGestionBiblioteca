@@ -6,8 +6,8 @@
 ---
 
 ## Instalación por carpeta:
-
-### Documentacion:
+hay que abrir 3 terminales (una por cada carpeta)
+* ### Documentacion:
 
 - Se asume que el proyecto fue descargado
 - ``cd documentacion``Ubicarse en la carpeta llamada documentacion
@@ -16,7 +16,7 @@
 
 ---
 
-### Backend:
+* ### Backend:
 
 - ``cd backend``Ubicarse en la carpeta llamada backend
 - npm install
@@ -24,7 +24,7 @@
 
 ---
 
-### Frontend:
+* ### Frontend:
 
 - ``cd frontend``Ubicarse en la carpeta llamada frontend
 - npm install

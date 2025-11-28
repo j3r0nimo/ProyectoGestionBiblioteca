@@ -8,6 +8,7 @@
 ## Instalación
 
 - Se asume que el proyecto fue descargado
+- Ubicarse en la raiz, coincidiendo con la ubicación de package.json
 - npm install
 - npm run start
 

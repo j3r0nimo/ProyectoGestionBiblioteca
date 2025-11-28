@@ -1,4 +1,4 @@
-# Proyecto Gestion De Biblioteca Personal
+# Documentación De Biblioteca Personal
 
 - Documentación Técnica y de usuario del sitio de documentación.
 - Sitio creado con Docusaurus.

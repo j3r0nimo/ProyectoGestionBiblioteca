@@ -9,6 +9,13 @@ node_modules/
 Thumbs.db
 .DS_Store
 
+# Production
+/build
+
+# Generated files
+.docusaurus
+.cache-loader
+
 # Logs
 logs/
 *.log

@@ -37,6 +37,14 @@ const sidebars = {
         "frontend/servicios",
       ],
     },
+    {
+      type: "category",
+      label: "Patrones de Diseño",
+      collapsed: false,
+      items: [
+        "patrones/patrones"
+      ]
+    }
   ],
 };
 

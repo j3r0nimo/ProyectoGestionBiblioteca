@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   res.json({
-    message: 'Skynet is fully operational.',
+    message: 'La librería personal está en red.',
     
     variables_GET: '&page=1, &limit=2, &keyword=(busca en tituloLibro, genero, subgenero & tituloArticulo, resumenArticulo)',
    
@@ -11,31 +11,26 @@ router.get('/', (req, res) => {
     endpoints: {
       Libros: {
         acceso: 'http://localhost:3000/libros',
-        descripcion: 'Listados de libros.',
-        ejemplo: 'http://localhost:3000/libros?page=1&limit=15&keyword=naval',
+        descripcion: 'Listados de libros.',        
         coleccion: 'tipo, isbn, issn, tituloLibro, autor, idioma, editorial, medidas, genero, subgenero, mes, anio, paginas, portadaImagePath'
       },
       Contenidos: {
         acceso: 'http://localhost:3000/contenidos',
-        descripcion: 'Contenido & artículos de todos los libros.',
-        ejemplo: 'http://localhost:3000/contenidos?page=1&limit=15&keyword=malvinas',
+        descripcion: 'Contenido & artículos de todos los libros.',        
         coleccion: 'libroId, tituloArticulo, resumenArticulo, paginaArticulo'
       }
     },
     Libro_por_ID: {
         acceso: 'http://localhost:3000/libros/:id',
-        descripcion: 'Detalle por libro.',
-        ejemplo: 'http://localhost:3000/libros/687d986fb9dc0e83b054974d'
+        descripcion: 'Detalle por libro.'
       },
     Contenido_por_ID: {
         acceso: 'http://localhost:3000/contenidos/:id',
-        descripcion: 'Un contenido individual.',
-        ejemplo: 'http://localhost:3000/contenidos/6886c9694c2b582f7a768b1c'
+        descripcion: 'Un contenido individual.'
       },      
     Contenido_por_Libro: {
         acceso: 'http://localhost:3000/contenidos/libro/:id',
-        descripcion: 'Contenido & artículos por libro.',
-        ejemplo: 'http://localhost:3000/contenidos/libro/687d9789b9dc0e83b0549747'
+        descripcion: 'Contenido & artículos por libro.'
       }    
   });
 });

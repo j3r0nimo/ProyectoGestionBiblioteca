@@ -3,7 +3,7 @@
 ## Clonar el repositorio
 
 - Clonar el contenido
-- git clone https://github.com/j3r0nimo/ProyectoGestionBiblioteca.git
+- `git clone https://github.com/j3r0nimo/ProyectoGestionBiblioteca.git`
 
 ---
 

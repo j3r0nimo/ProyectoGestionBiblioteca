@@ -18,6 +18,7 @@
 
 - Cada carpeta configura un servicio
 - Se debe instalar cada uno de ellos
+- En cada caso va a precisar ejecutar `cd ProyectoGestionBiblioteca`
 
 ### Documentacion
 

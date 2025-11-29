@@ -1,39 +1,54 @@
-# Documentación De Biblioteca Personal:
+# Descarga e instalación del sitio
 
-- Documentación Técnica y de usuario del sitio de documentación.
-- Sitio creado con Docusaurus.
+## Clonar el repositorio
+
+- Clonar el contenido
 
 ---
 
-## Instalación por carpeta:
-hay que abrir 3 terminales (una por cada carpeta)
-* ### Documentacion:
+## Requisito
 
-- Se asume que el proyecto fue descargado
-- ``cd documentacion``Ubicarse en la carpeta llamada documentacion
+- Instalar mongoDB
+
+---
+
+## Instalación por carpeta
+
+- Cada carpeta configura un servicio
+- Se debe instalar cada uno de ellos
+
+### Documentacion
+
+- `cd documentacion`
 - npm install
 - npm run start
 
 ---
 
-* ### Backend:
+### Backend
 
-- ``cd backend``Ubicarse en la carpeta llamada backend
+- `cd backend`
+- crear el archivo .env: `cp .env.template .env` (Solo Linux y Windows PowerShell, NO cmd)
+- npm install
+- npm run seed
+- npm run dev
+
+---
+
+### Frontend:
+
+- `cd frontend`
 - npm install
 - npm run dev
 
 ---
 
-* ### Frontend:
+## Servicios
 
-- ``cd frontend``Ubicarse en la carpeta llamada frontend
-- npm install
-- npm run dev
-
----
-## Servicio:
-
-El sitio de documentación estará en el puerto localhost:4000
+- El sitio de documentación estará en el puerto localhost:4000
+- El backend estará en el puerto localhost:3000
+- El frontend estará en el puerto localhost:5173
+- La Base de datos estará en el puerto localhost:27017
 
 ---
 

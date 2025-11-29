@@ -8,6 +8,7 @@
 
 ## Requisito
 
+- Instalar Node.js
 - Instalar mongoDB
 
 ---

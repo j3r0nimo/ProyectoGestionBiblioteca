@@ -1,0 +1,41 @@
+# Node modules
+node_modules/
+.env
+
+# Environment variables
+.env
+
+# System files
+Thumbs.db
+.DS_Store
+
+# Production
+/build
+
+# Generated files
+.docusaurus
+.cache-loader
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Build artifacts
+dist/
+dist-ssr/
+*.local
+
+# Editor directories and files
+.vscode/
+!.vscode/extensions.json
+.idea/
+
+# Other editor/project files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

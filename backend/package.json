@@ -1,0 +1,43 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "prepare": "cd .. && npx husky",
+    "test": "npx vitest run",
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "seed": "node src/db/seed.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "http-errors": "^2.0.0",
+    "mongodb": "^6.17.0",
+    "mongoose": "^8.16.4",
+    "multer": "^2.0.2",
+    "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
+    "prettier": "^3.6.2",
+    "supertest": "^7.1.4",
+    "vitest": "^4.0.8"
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "npx eslint --config eslint.config.js --fix",
+      "npx prettier --write"
+    ]
+  }
+}
